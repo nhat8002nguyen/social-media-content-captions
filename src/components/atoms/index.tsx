@@ -1,3 +1,4 @@
+import { phonePrefixes } from "@src/shared/constants/phonePrefixes"
 import React from "react"
 
 interface PhoneInputProps {}
@@ -11,10 +12,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = () => {
             id="phone-prefix"
             className="appearance-none bg-white px-4 py-2 pr-8 border-r border-gray-400 outline-none focus:border-gray-500"
           >
-            <option value="+1">+1</option>
-            <option value="+44">+44</option>
-            <option value="+91">+91</option>
-            <option value="+61">+61</option>
+            {phonePrefixes.map((p) => <option value={p.code}>{`${p.flag} ${p.code}`}</option>)}
           </select>
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
             <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -24,8 +22,8 @@ export const PhoneInput: React.FC<PhoneInputProps> = () => {
         </div>
         <input
           id="phone-number"
-          type="text"
-          className="w-full py-2 px-3 text-gray-700 outline-none focus:border-gray-500"
+          type="number"
+          className="w-full py-2 px-3 text-gray-700 outline-none focus:border-gray-500 no-spinner"
           placeholder="Your phone number"
         />
       </div>

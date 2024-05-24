@@ -49,5 +49,8 @@
     "customize-cra": "^1.0.0",
     "react-app-rewired": "^2.2.1",
     "tailwindcss": "^3.4.3"
-  }
+  },
+  "repository": "https://github.com/nhat8002nguyen/social-media-content-captions.git",
+  "author": "nhat8002nguyen <nv.nhat8002@gmail.com>",
+  "license": "MIT"
 }
