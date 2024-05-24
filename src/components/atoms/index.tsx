@@ -42,7 +42,7 @@ export const PrimaryInput = React.forwardRef<HTMLInputElement, PrimaryInputProps
   const { className, placeholder, loading, ...rest } = props;
 
   return (
-    <div className="max-w-md w-80 bg-white p-2 rounded-lg shadow-md">
+    <div className="max-w-md w-80 bg-white p-2 rounded-lg shadow-sm">
         <input
           id="phone-number"
           type="text"
