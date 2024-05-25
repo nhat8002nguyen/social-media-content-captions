@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Login from '@src/pages/login';
 import Verify from '@src/pages/verify';
+import Dashboard from './pages/dashboard';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/verify",
     element: <Verify />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
   },
 ]);
 
