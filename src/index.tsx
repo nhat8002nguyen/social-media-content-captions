@@ -9,7 +9,10 @@ import {
 } from "react-router-dom";
 import Login from '@src/pages/login';
 import Verify from '@src/pages/verify';
+import DashboardServices from './pages/dashboard/services';
 import Dashboard from './pages/dashboard';
+import NotFound from './components/molecules/NotFound';
+import DashboardProfile from './pages/dashboard/profile';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +30,18 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "/dashboard/services",
+    element: <DashboardServices />,
+  },
+  {
+    path: "/dashboard/profile",
+    element: <DashboardProfile />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
