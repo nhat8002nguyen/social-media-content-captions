@@ -1,6 +1,7 @@
-import React, { ReactNode, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as localstorage from "@src/utilities/localforageUtils";
+import React, { ReactNode } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 interface Category {
@@ -19,15 +20,19 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
 
   const categories: Category[] = [
     { name: 'Services', icon: faCog, pathname: "/dashboard/services" },
-    { name: 'Profile', icon: faUser, pathname: "/dashboard/profile" }
+    { name: 'Profile', icon: faUser, pathname: "/dashboard/profile" },
+    { name: 'Logout', icon: faUser, pathname: "/login" }
   ];
 
   const handleClick = (category: Category) => {
+    if (category.name === "Logout") {
+      localstorage.removeItem("expiredTime")
+    }
     naviate(category.pathname)
   }
 
   return (
-    <div className="h-screen flex flex-col md:flex-row">
+    <div className="min-h-screen flex flex-col md:flex-row">
       <div className="w-full md:w-1/5 bg-white text-text-black">
         <div className='px-8 py-8'>
           <h1 className='text-left text-3xl text-primary-color-l'>Skipli <span className='text-text-black'>AI</span></h1>
@@ -37,7 +42,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
             <li
               key={category.name}
               onClick={() => handleClick(category)}
-              className={`flex items-center p-2 rounded cursor-pointer transition-colors ${location.pathname === category.pathname ? 'bg-bg-blue-left' : 'hover:bg-bg-blue-left'}`}
+              className={`flex items-center p-2 rounded cursor-pointer transition-colors ${location.pathname.includes(category.pathname) ? 'bg-bg-blue-left' : 'hover:bg-bg-blue-left'}`}
             >
               <FontAwesomeIcon icon={category.icon} className="mr-2" />
               <span>{category.name}</span>

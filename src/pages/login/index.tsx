@@ -1,12 +1,12 @@
-import { ReactComponent as SkipliLogo } from '@src/shared/icons/skipli-logo.svg';
+import { createNewAccessCode } from '@src/api';
 import '@src/App.css';
 import { PhoneInput, PrimaryButton } from '@src/components/atoms';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { ReactComponent as SkipliLogo } from '@src/shared/icons/skipli-logo.svg';
 import { sleep } from '@src/utilities';
-import { useNavigate } from 'react-router-dom';
+import * as localStorage from '@src/utilities/localforageUtils';
 import { useEffect, useState } from 'react';
-import * as localStorage from '@src/utilities/localforageUtils'
-import { createNewAccessCode } from '@src/api';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 export interface LoginInputs {
   phonePrefix: string

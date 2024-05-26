@@ -1,12 +1,12 @@
-import { ReactComponent as SkipliLogo } from '@src/shared/icons/skipli-logo.svg';
+import { validateAccessCode } from '@src/api';
 import '@src/App.css';
 import { PrimaryButton, PrimaryInput } from '@src/components/atoms';
+import { ReactComponent as SkipliLogo } from '@src/shared/icons/skipli-logo.svg';
+import { getSavedPhoneNumber, sleep } from '@src/utilities';
+import * as localStorage from '@src/utilities/localforageUtils';
 import { useEffect, useState } from 'react';
-import * as localStorage from '@src/utilities/localforageUtils'
-import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { sleep } from '@src/utilities';
-import { validateAccessCode } from '@src/api';
+import { useNavigate } from 'react-router-dom';
 
 export interface VerifyInput {
   accessCode: string
@@ -24,7 +24,7 @@ function Verify() {
 
   const onSubmit: SubmitHandler<VerifyInput> = async (data) => {
     try {
-      const phone = (await localStorage.getItem("phonePrefix")) + (await localStorage.getItem("phoneNumber"))
+      const phone = await getSavedPhoneNumber()
       const result = await validateAccessCode(phone, data)
 
       if (result?.success) {
@@ -69,11 +69,11 @@ function Verify() {
             <p>Skipli AI has sent an OTP code to: <span className='font-bold'>{phoneNumber}</span></p>
           </div>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
-          <PrimaryInput {...register("accessCode", { required: true })} loading={isSubmitting} placeholder='Enter your code' />
-          {errors.accessCode?.type === "required" && (
+        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4 w-full'>
+          <PrimaryInput {...register("accessCode", { required: true })} errors={errors} inputName={"accessCode"} loading={isSubmitting} placeholder='Enter your code' />
+          {/* {errors.accessCode?.type === "required" && (
             <p role="alert" className='text-sm text-primary-color-r'>Access code is required</p>
-          )}
+          )} */}
           <PrimaryButton loading={isSubmitting} isSuccess={success} text='Submit' />
         </form>
       </div>

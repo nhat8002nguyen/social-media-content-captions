@@ -1,44 +1,131 @@
+import { getUserGeneratedContents, unsaveContent } from '@src/api';
 import '@src/App.css';
-import NotFound from '@src/components/molecules/NotFound';
-import * as localstorage from "@src/utilities/localforageUtils"
+import { PrimaryButton, SecondaryButton } from '@src/components/atoms';
+import useAuth from '@src/hooks/useAuth';
+import { DashboardLayout } from '@src/pages/dashboard/layout';
+import { getSavedPhoneNumber } from '@src/utilities';
 import { useEffect, useState } from 'react';
-import { DashboardLayout } from '../layout';
+import { Navigate } from 'react-router-dom';
 
-export default function DashboardProfile() {
-  const [isAuthenticated, setIsAutheticated] = useState<boolean | null>(null)
+interface Caption {
+  id: string
+  content: string
+  topic: string
+  saved: boolean
+}
 
+export interface ScratchGenerationInputs {
+  socialNetwork: string,
+  subject: string,
+  tone: string
+}
+
+export default function Profile() {
+  const [isAuthenticated] = useAuth()
+  const [topicContents, setTopicContents] = useState<Map<string, Caption[]>>(new Map())
+
+  // load generated content from server
   useEffect(() => {
-    const checkAuth = async () => {
-      const expiredTime = await localstorage.getItem("expiredTime")
+    const fetchGeneratedContent = async () => {
+      try {
+        const captions = await getUserGeneratedContents({ phoneNumber: await getSavedPhoneNumber() })
+        if (captions.length === 0) {
+          throw new Error("Can not load generated contents, please try again!")
+        }
 
-      if (expiredTime && new Date(expiredTime).getTime() > new Date().getTime()) {
-        setIsAutheticated(true)
-      } else {
-        setIsAutheticated(false)
+        const temp = new Map<string, Caption[]>(topicContents)
+        captions.forEach(c => {
+          if (temp.has(c.topic)) {
+            temp.get(c.topic)?.push({
+              id: c.id,
+              topic: c.topic,
+              content: c.data,
+              saved: true
+            })
+          } else {
+            temp.set(c.topic, [{
+              id: c.id,
+              topic: c.topic,
+              content: c.data,
+              saved: true
+            }])
+          }
+        })
+
+        setTopicContents(temp)
+      } catch (err) {
+        console.error(err)
+        alert(err)
       }
     }
-    checkAuth()
+
+    fetchGeneratedContent()
   }, [])
 
+  const handleUnsaveContent = async (c: Caption) => {
+    try {
+      const result = await unsaveContent({
+        captionId: c.id
+      })
+      if (result.success) {
+        const temp = new Map<string, Caption[]>(topicContents)
+        let contents = temp.get(c.topic)
+        if (!contents) {
+          return
+        }
 
+        contents = contents.filter(cap => cap.id !== c.id)
+        if (contents.length === 0) {
+          temp.delete(c.topic)
+        } else {
+          temp.set(c.topic, contents)
+        }
+        setTopicContents(temp)
+      }
+    } catch (err) {
+      console.error(err)
+      alert(err)
+    }
+  }
 
   return (
     <>
       {
-        // isAuthenticated === false ? <NotFound></NotFound> :
-        false ? <NotFound></NotFound> :
-          <main className="App h-screen bg-gradient-to-r from-bg-blue-left to-bg-blue-right">
-            {/* {isAuthenticated */}
-            {true
-              ? <div>
-                <DashboardLayout>
-
-                </DashboardLayout>
-              </div>
-              : ""}
+        isAuthenticated === null ? "" : isAuthenticated === false ? <Navigate to={"/login"} replace /> :
+          <main className="App min-h-screen bg-gradient-to-r from-bg-blue-left to-bg-blue-right">
+            <div>
+              <DashboardLayout>
+                <div className='md:py-24 md:px-16 lg:w-full xl:w-3/4 flex flex-col gap-8'>
+                  <h1 className='text-2xl sm:text-xl text-left font-bold'>Saved Content</h1>
+                  <div className='flex flex-col gap-4'>
+                    <div className='flex flex-col gap-8'>
+                      {Array.from(topicContents).map(entry =>
+                        <div className='flex flex-col gap-4'>
+                          <h3 className='text-lg sm:text-lg text-left font-bold'>{entry[0]}</h3>
+                          {entry[1].map(c =>
+                            <div key={c.id} className='flex flex-col bg-white px-4 py-2 gap-4 rounded-lg'>
+                              <div>
+                                <p className='text-left'>
+                                  {c.content}
+                                </p>
+                              </div>
+                              <div className='flex gap-4 justify-end'>
+                                <PrimaryButton text='Share' className='h-8' />
+                                <SecondaryButton
+                                  text='Unsaved'
+                                  className='h-8'
+                                  onClick={() => handleUnsaveContent(c)}
+                                />
+                              </div>
+                            </div>)}
+                        </div>)}
+                    </div>
+                  </div>
+                </div>
+              </DashboardLayout>
+            </div>
           </main>
       }
     </>
-
   );
 }

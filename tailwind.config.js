@@ -12,6 +12,11 @@ module.exports = {
         'primary-color-l': '#FE5542',
         'text-grey': '#798297',
         'text-black': '#2B3241',
+        facebook: '#1877F2',
+        instagram: {
+          100: '#F58529',   // Lightest Shade
+        },
+        twitter: '#0F141A'
       },
       fontFamily: {
         nunito: ['Nunito', 'sans-serif'],

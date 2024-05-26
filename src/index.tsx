@@ -1,18 +1,22 @@
-import React, { ReactNode, useState } from 'react';
+import Login from '@src/pages/login';
+import Verify from '@src/pages/verify';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Login from '@src/pages/login';
-import Verify from '@src/pages/verify';
-import DashboardServices from './pages/dashboard/services';
-import Dashboard from './pages/dashboard';
+import App from './App';
 import NotFound from './components/molecules/NotFound';
+import './index.css';
+import Dashboard from './pages/dashboard';
 import DashboardProfile from './pages/dashboard/profile';
+import DashboardServices from './pages/dashboard/services';
+import FromScratchService from './pages/dashboard/services/from-scratch';
+import CaptionCreateService from './pages/dashboard/services/from-scratch/caption-create';
+import GetInspiredService from './pages/dashboard/services/get-inspired';
+import InspiredCaptionCreate from './pages/dashboard/services/get-inspired/caption-create';
+import reportWebVitals from './reportWebVitals';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +42,22 @@ const router = createBrowserRouter([
   {
     path: "/dashboard/profile",
     element: <DashboardProfile />,
+  },
+  {
+    path: "/dashboard/services/from-scratch",
+    element: <FromScratchService />,
+  },
+  {
+    path: "/dashboard/services/from-scratch/:social",
+    element: <CaptionCreateService />,
+  },
+  {
+    path: "/dashboard/services/get-inspired",
+    element: <GetInspiredService />,
+  },
+  {
+    path: "/dashboard/services/get-inspired/captions",
+    element: <InspiredCaptionCreate />,
   },
   {
     path: "*",
