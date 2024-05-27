@@ -11,4 +11,4 @@
 ## How to run:
 1. Install the backend source, add .env variables, and run the server in localhost with port 9000.
 2. Install packages with `yarn`.
-3. 3. Run the app using `yarn start`.
+3. Run the app using `yarn start`.
