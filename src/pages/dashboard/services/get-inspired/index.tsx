@@ -14,7 +14,7 @@ export interface IdeasGenerationInputs {
 
 export default function GetInspiredService() {
   const [success, setSuccess] = useState(false)
-  const [isAuthenticated] = useAuth()
+  const { isAuthenticated } = useAuth()
   const [ideas, setIdeas] = useState<string[]>([])
   const navigate = useNavigate()
 

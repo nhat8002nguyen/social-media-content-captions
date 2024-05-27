@@ -4,7 +4,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { DashboardLayout } from '../layout';
 
 export default function DashboardServices() {
-  const [isAuthenticated] = useAuth()
+  const { isAuthenticated } = useAuth()
 
   return (
     <>

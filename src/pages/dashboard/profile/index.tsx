@@ -21,7 +21,7 @@ export interface ScratchGenerationInputs {
 }
 
 export default function Profile() {
-  const [isAuthenticated] = useAuth()
+  const { isAuthenticated } = useAuth()
   const [topicContents, setTopicContents] = useState<Map<string, Caption[]>>(new Map())
 
   // load generated content from server

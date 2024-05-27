@@ -23,7 +23,7 @@ export interface ScratchGenerationInputs {
 
 export default function CaptionCreateService() {
   const [success, setSuccess] = useState(false)
-  const [isAuthenticated] = useAuth()
+  const { isAuthenticated } = useAuth()
   const params = useParams()
   const [captions, setCaptions] = useState<Caption[]>([])
   const [isContentSaving, setIsContentSaving] = useState(false)

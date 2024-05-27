@@ -23,7 +23,7 @@ export interface ScratchGenerationInputs {
 
 export default function InspiredCaptionCreate() {
   const [success, setSuccess] = useState(false)
-  const [isAuthenticated] = useAuth()
+  const { isAuthenticated } = useAuth()
   const [captions, setCaptions] = useState<Caption[]>([])
   const [isContentSaving, setIsContentSaving] = useState(false)
   const { state } = useLocation()

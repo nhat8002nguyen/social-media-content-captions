@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
 import * as localstorage from "@src/utilities/localforageUtils"
+import { useEffect, useState } from "react"
 
 export default function useAuth() {
   const [isAuthenticated, setIsAutheticated] = useState<boolean | null>(null)
@@ -17,5 +17,5 @@ export default function useAuth() {
     checkAuth()
   }, [])
 
-  return [isAuthenticated]
+  return { isAuthenticated }
 }

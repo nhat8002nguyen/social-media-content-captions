@@ -13,7 +13,7 @@ interface Social {
 }
 
 export default function FromScratchService() {
-  const [isAuthenticated] = useAuth()
+  const { isAuthenticated } = useAuth()
 
   const socials: Social[] = [
     {
