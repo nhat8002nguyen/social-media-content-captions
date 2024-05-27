@@ -1,5 +1,8 @@
 ### create-react-app, typescript, and tailwind CSS. 
 
+## Recording demo
+- https://sharing.clickup.com/clip/p/t25531591/2bbf5221-ac7c-4c70-ad2f-6d015d7146e0/screen-recording-2024-05-27-11%3A44.webm
+  
 ## Figma designs
 - https://www.figma.com/design/1nWE38nTb8Jo1ux0vNr8Nz/Skipli---Coding-Challenge?node-id=0-1
 
