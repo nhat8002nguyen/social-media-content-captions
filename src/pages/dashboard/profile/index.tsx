@@ -33,9 +33,6 @@ export default function Profile() {
     const fetchGeneratedContent = async () => {
       try {
         const captions = await getUserGeneratedContents({ phoneNumber: await getSavedPhoneNumber() })
-        if (captions.length === 0) {
-          throw new Error("Can not load generated contents, please try again!")
-        }
 
         const temp = new Map<string, Caption[]>(topicContents)
         captions.forEach(c => {
@@ -106,7 +103,7 @@ export default function Profile() {
               <DashboardLayout>
                 <div className='md:py-24 md:px-16 lg:w-full xl:w-3/4 flex flex-col gap-8'>
                   <h1 className='text-2xl sm:text-xl text-left font-bold'>Saved Content</h1>
-                  <div className='flex flex-col gap-4'>
+                  {Array.from(topicContents).length > 0 ? <div className='flex flex-col gap-4'>
                     <div className='flex flex-col gap-8'>
                       {Array.from(topicContents).map(entry =>
                         <div className='flex flex-col gap-4'>
@@ -130,6 +127,9 @@ export default function Profile() {
                         </div>)}
                     </div>
                   </div>
+                    : <div className='text-left'>
+                      Content not found
+                    </div>}
                 </div>
               </DashboardLayout>
             </div>
