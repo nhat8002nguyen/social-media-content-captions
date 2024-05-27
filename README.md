@@ -11,5 +11,5 @@
 ## How to run:
 1. Download and set up the backend source: https://github.com/nhat8002nguyen/social-media-content-ideas-backend. Then, run it. 
 2. Clone this source code. 
-3. Install packages with `yarn`.
-4. Run the app using `yarn start`.
+3. Install packages with `yarn`(preferred), or `npm`.
+4. Run the app using `yarn start`, or `npm start`.
