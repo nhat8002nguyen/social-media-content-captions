@@ -1,6 +1,7 @@
 import { generatePostCaptions, saveGeneratedContent, unsaveContent } from '@src/api';
 import '@src/App.css';
 import { PrimaryButton, PrimaryInput, SecondaryButton } from '@src/components/atoms';
+import ShareModal from '@src/components/molecules/ShareModel';
 import useAuth from '@src/hooks/useAuth';
 import { DashboardLayout } from '@src/pages/dashboard/layout';
 import { getSavedPhoneNumber, sleep } from '@src/utilities';
@@ -27,6 +28,8 @@ export default function CaptionCreateService() {
   const params = useParams()
   const [captions, setCaptions] = useState<Caption[]>([])
   const [isContentSaving, setIsContentSaving] = useState(false)
+  const [sharedData, setSharedData] = useState<{ topic: string, content: string }>({ topic: "", content: "" })
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const socialShort: string = params.social === undefined ? "default" : params.social
 
@@ -118,6 +121,11 @@ export default function CaptionCreateService() {
     }
   }
 
+  const handleClickShare = (c: Caption) => {
+    setSharedData({ topic: c.topic, content: c.content })
+    setIsModalOpen(true)
+  }
+
   return (
     <>
       {
@@ -152,7 +160,7 @@ export default function CaptionCreateService() {
                               </p>
                             </div>
                             <div className='flex gap-4 justify-end'>
-                              <PrimaryButton text='Share' className='h-8' />
+                              <PrimaryButton text='Share' className='h-8' onClick={() => handleClickShare(c)} />
                               {!c.saved
                                 ? <SecondaryButton
                                   text='Save'
@@ -174,6 +182,12 @@ export default function CaptionCreateService() {
                   </div>
                 </DashboardLayout>
               </div>
+              <ShareModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                topic={sharedData?.topic}
+                content={sharedData?.content}
+              />
             </main>
       }
     </>

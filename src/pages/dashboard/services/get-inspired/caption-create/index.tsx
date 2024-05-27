@@ -1,6 +1,7 @@
 import { createCaptionsFromIdeas, saveGeneratedContent, unsaveContent } from '@src/api';
 import '@src/App.css';
 import { PrimaryButton, SecondaryButton } from '@src/components/atoms';
+import ShareModal from '@src/components/molecules/ShareModel';
 import useAuth from '@src/hooks/useAuth';
 import { DashboardLayout } from '@src/pages/dashboard/layout';
 import { getSavedPhoneNumber, sleep } from '@src/utilities';
@@ -27,6 +28,8 @@ export default function InspiredCaptionCreate() {
   const [captions, setCaptions] = useState<Caption[]>([])
   const [isContentSaving, setIsContentSaving] = useState(false)
   const { state } = useLocation()
+  const [sharedData, setSharedData] = useState<{ topic: string, content: string }>({ topic: "", content: "" })
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
     handleSubmit,
@@ -104,6 +107,11 @@ export default function InspiredCaptionCreate() {
     }
   }
 
+  const handleClickShare = (c: Caption) => {
+    setSharedData({ topic: c.topic, content: c.content })
+    setIsModalOpen(true)
+  }
+
   return (
     <>
       {
@@ -129,7 +137,7 @@ export default function InspiredCaptionCreate() {
                             </p>
                           </div>
                           <div className='flex gap-4 justify-end'>
-                            <PrimaryButton text='Share' className='h-8' />
+                            <PrimaryButton text='Share' className='h-8' onClick={() => handleClickShare(c)} />
                             {!c.saved
                               ? <SecondaryButton
                                 text='Save'
@@ -151,6 +159,12 @@ export default function InspiredCaptionCreate() {
                 </div>
               </DashboardLayout>
             </div>
+            <ShareModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              topic={sharedData?.topic}
+              content={sharedData?.content}
+            />
           </main>
       }
     </>

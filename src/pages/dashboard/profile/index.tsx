@@ -1,6 +1,7 @@
 import { getUserGeneratedContents, unsaveContent } from '@src/api';
 import '@src/App.css';
 import { PrimaryButton, SecondaryButton } from '@src/components/atoms';
+import ShareModal from '@src/components/molecules/ShareModel';
 import useAuth from '@src/hooks/useAuth';
 import { DashboardLayout } from '@src/pages/dashboard/layout';
 import { getSavedPhoneNumber } from '@src/utilities';
@@ -23,6 +24,9 @@ export interface ScratchGenerationInputs {
 export default function Profile() {
   const { isAuthenticated } = useAuth()
   const [topicContents, setTopicContents] = useState<Map<string, Caption[]>>(new Map())
+  const [sharedData, setSharedData] = useState<{ topic: string, content: string }>({ topic: "", content: "" })
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   // load generated content from server
   useEffect(() => {
@@ -88,6 +92,11 @@ export default function Profile() {
     }
   }
 
+  const handleClickShare = (c: Caption) => {
+    setSharedData({ topic: c.topic, content: c.content })
+    setIsModalOpen(true)
+  }
+
   return (
     <>
       {
@@ -110,7 +119,7 @@ export default function Profile() {
                                 </p>
                               </div>
                               <div className='flex gap-4 justify-end'>
-                                <PrimaryButton text='Share' className='h-8' />
+                                <PrimaryButton text='Share' className='h-8' onClick={() => handleClickShare(c)} />
                                 <SecondaryButton
                                   text='Unsaved'
                                   className='h-8'
@@ -124,6 +133,12 @@ export default function Profile() {
                 </div>
               </DashboardLayout>
             </div>
+            <ShareModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              topic={sharedData?.topic}
+              content={sharedData?.content}
+            />
           </main>
       }
     </>
