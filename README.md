@@ -9,7 +9,7 @@
 - src/utilities - common computation functions, and local storage wrapper. 
 
 ## How to run:
-1. Download the backend source: https://github.com/nhat8002nguyen/social-media-content-ideas-backend.
-2. Add .env variables, and run the server in localhost with port 9000.
+1. Download and set up the backend source: https://github.com/nhat8002nguyen/social-media-content-ideas-backend. Then, run it. 
+2. Clone this source code. 
 3. Install packages with `yarn`.
 4. Run the app using `yarn start`.
