@@ -1,8 +1,10 @@
 ### create-react-app, typescript, and tailwind CSS. 
 
-## Live app: https://social-media-content-captions.vercel.app/
+## Live app
+- https://social-media-content-captions.vercel.app/
 
-## Figma designs: https://www.figma.com/design/1nWE38nTb8Jo1ux0vNr8Nz/Skipli---Coding-Challenge?node-id=0-1
+## Figma designs
+- https://www.figma.com/design/1nWE38nTb8Jo1ux0vNr8Nz/Skipli---Coding-Challenge?node-id=0-1
 
 ## Project structure
 - src/api - API layer to make requests to the server using an Axios instance.
