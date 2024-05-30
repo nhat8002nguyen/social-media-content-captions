@@ -23,7 +23,7 @@ export interface ScratchGenerationInputs {
 
 export default function Profile() {
   const { isAuthenticated } = useAuth()
-  const [topicContents, setTopicContents] = useState<Map<string, Caption[]>>(new Map())
+  const [topicContents, setTopicContents] = useState<Map<string, Caption[]> | null>(null)
   const [sharedData, setSharedData] = useState<{ topic: string, content: string }>({ topic: "", content: "" })
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -34,7 +34,7 @@ export default function Profile() {
       try {
         const captions = await getUserGeneratedContents({ phoneNumber: await getSavedPhoneNumber() })
 
-        const temp = new Map<string, Caption[]>(topicContents)
+        const temp = new Map<string, Caption[]>()
         captions.forEach(c => {
           if (temp.has(c.topic)) {
             temp.get(c.topic)?.push({
@@ -103,7 +103,7 @@ export default function Profile() {
               <DashboardLayout>
                 <div className='md:py-24 md:px-16 lg:w-full xl:w-3/4 flex flex-col gap-8'>
                   <h1 className='text-2xl sm:text-xl text-left font-bold'>Saved Content</h1>
-                  {Array.from(topicContents).length > 0 ? <div className='flex flex-col gap-4'>
+                  {topicContents === null ? "" : Array.from(topicContents).length > 0 ? <div className='flex flex-col gap-4'>
                     <div className='flex flex-col gap-8'>
                       {Array.from(topicContents).map(entry =>
                         <div className='flex flex-col gap-4'>

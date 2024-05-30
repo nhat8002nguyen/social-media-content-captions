@@ -79,6 +79,19 @@ export default function CaptionCreateService() {
     ["default", "Social Post"],
   ])
 
+  const tones: string[] = [
+    "Friendly",
+    "Professional",
+    "Luxury",
+    "Relaxed",
+    "Professional",
+    "Bold",
+    "Adventurous",
+    "Witty",
+    "Persuasive",
+    "Empathetic"
+  ]
+
   const handleSaveContent = async (c: Caption) => {
     try {
       setIsContentSaving(true)
@@ -143,7 +156,14 @@ export default function CaptionCreateService() {
                       </div>
                       <div className='text-left flex flex-col gap-2'>
                         <p>What should your caption sound like?</p>
-                        <PrimaryInput {...register("tone", { required: true })} inputName='tone' errors={errors} loading={isSubmitting} placeholder='Enter your tone' className='w-full'></PrimaryInput>
+                        <select
+                          id="tone"
+                          className="rounded-lg bg-white px-4 py-2 h-14 outline-none focus:border-gray-500"
+                          disabled={isSubmitting}
+                          {...register("tone", { required: true })}
+                        >
+                          {tones.map((t, i) => <option key={i} value={t}>{t}</option>)}
+                        </select>
                       </div>
                       <div className='flex justify-end'>
                         <PrimaryButton text='Generate Caption' className='lg:w-1/3 md:w-2/3' loading={isSubmitting} isSuccess={success} />
