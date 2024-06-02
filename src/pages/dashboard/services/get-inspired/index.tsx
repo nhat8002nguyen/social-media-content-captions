@@ -1,10 +1,11 @@
 import { getPostIdeas } from '@src/api';
 import '@src/App.css';
 import { PrimaryButton, PrimaryInput, SecondaryButton } from '@src/components/atoms';
+import { dashboardContext, dashboardDispatchContext } from '@src/context/dashboard';
 import useAuth from '@src/hooks/useAuth';
 import { DashboardLayout } from '@src/pages/dashboard/layout';
 import { sleep } from '@src/utilities';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Navigate, useNavigate } from 'react-router-dom';
 
@@ -15,8 +16,11 @@ export interface IdeasGenerationInputs {
 export default function GetInspiredService() {
   const [success, setSuccess] = useState(false)
   const { isAuthenticated } = useAuth()
-  const [ideas, setIdeas] = useState<string[]>([])
+  // const [ideas, setIdeas] = useState<string[]>([])
   const navigate = useNavigate()
+
+  const { ideas } = useContext(dashboardContext)
+  const { ideasDispatch } = useContext(dashboardDispatchContext)
 
 
   const {
@@ -32,7 +36,8 @@ export default function GetInspiredService() {
         throw new Error("Something was wrong, please try again later!")
       }
 
-      setIdeas(ideas)
+      // setIdeas(ideas)
+      ideasDispatch({ type: "replace", payload: { ideas } })
 
       setSuccess(true)
       await sleep(1000)
@@ -45,7 +50,7 @@ export default function GetInspiredService() {
   }
 
   const handleClickIdea = (idea: string) => {
-    navigate("/dashboard/services/get-inspired/captions", { state: { idea } })
+    navigate("/dashboard/services/get-inspired/captions", { state: { idea: idea.replace(/\d\.\s/, "") } })
   }
 
   return (

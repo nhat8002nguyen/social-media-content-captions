@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import App from './App';
 import NotFound from './components/molecules/NotFound';
+import { DashboardContextAllProvider } from './context/dashboard';
 import './index.css';
 import Dashboard from './pages/dashboard';
 import DashboardProfile from './pages/dashboard/profile';
@@ -68,7 +69,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <DashboardContextAllProvider>
+      <RouterProvider router={router} />
+    </DashboardContextAllProvider>
   </React.StrictMode>
 );
 

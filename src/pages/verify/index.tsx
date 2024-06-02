@@ -29,7 +29,7 @@ function Verify() {
 
       if (result?.success) {
         // Set authenticated to allow accessing protected pages, expired after a time
-        localStorage.setItem("expiredTime", new Date(new Date().getTime() + 60 * 60000).getTime())
+        localStorage.setItem("expiredTime", new Date(new Date().getTime() + 1440 * 60000).getTime())
 
         setSuccess(true)
         await sleep(1000)
