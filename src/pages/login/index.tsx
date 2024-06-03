@@ -1,7 +1,6 @@
 import { createNewAccessCode } from '@src/api';
 import '@src/App.css';
 import { PhoneInput, PrimaryButton } from '@src/components/atoms';
-import { ReactComponent as SkipliLogo } from '@src/shared/icons/skipli-logo.svg';
 import { sleep } from '@src/utilities';
 import * as localStorage from '@src/utilities/localforageUtils';
 import { useEffect, useState } from 'react';
@@ -54,9 +53,8 @@ function Login() {
   }, [reset]);
 
   return (
-    <main className="App h-screen py-16 bg-gradient-to-r from-bg-blue-left to-bg-blue-right flex flex-col items-center">
+    <main className="App h-screen py-40 bg-gradient-to-r from-bg-blue-left to-bg-blue-right flex flex-col items-center">
       <div className='flex flex-col items-center w-160 gap-8'>
-        <SkipliLogo width={80} height={80} />
         <div>
           <h1 className='text-big-title font-nunito'>
             Welcome to <span className='text-primary-color-r'>Skipli</span> AI
